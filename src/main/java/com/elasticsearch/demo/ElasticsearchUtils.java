@@ -12,6 +12,7 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilder;
 
+@SuppressWarnings("all")
 public class ElasticsearchUtils {
 
 	private Client client;

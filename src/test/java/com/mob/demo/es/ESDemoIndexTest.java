@@ -94,7 +94,7 @@ public class ESDemoIndexTest {
 		//获得指定一段时间内索引的数量
 //		esDemoIndex.countWithBetween(betweenField, beginOf, endOf);
 		//查询query
-/*		QueryBuilder query = new QueryBuilder() {
+		/*QueryBuilder query = new QueryBuilder() {
 			
 			public XContentBuilder toXContent(XContentBuilder builder, Params params) throws IOException {
 				// TODO Auto-generated method stub
@@ -111,17 +111,15 @@ public class ESDemoIndexTest {
 				return null;
 			}
 		};
-		List<ESDemo> executeQuery = esDemoIndex.executeQuery(query);
-*/		
+		List<ESDemo> executeQuery = esDemoIndex.executeQuery(query);*/		
 		//集群上是否存在该索引
 //		boolean indexAtCluster = esDemoIndex.existIndexAtCluster();
 //		System.out.println(indexAtCluster);
+		//索引上是否存在
 //		boolean exists = esDemoIndex.exists("3");
 //		System.out.println(exists);
 		
-		
-		
-		
+			
 
 		/*
 		 * SearchRequestBuilder searchRequestBuilder = esDemoIndex.createSearchRequestBuilder();

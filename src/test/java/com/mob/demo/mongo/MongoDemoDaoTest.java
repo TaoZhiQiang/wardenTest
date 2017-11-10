@@ -43,8 +43,11 @@ public class MongoDemoDaoTest {
 		
 		//更新字段
 //		UpdateOperations<MongoDemo> createUpdateOperations = mongoDao.createUpdateOperations();
+		//将需要更改的字段保存进createUpdateOperations
 //		createUpdateOperations.set("testField", "test1");
+		//执行更新
 //		mongoDao.update("3", createUpdateOperations);
+		//直接更新
 //		mongoDao.update("2", "testField", "test2");	
 //		//自增操作
 //		createUpdateOperations.inc("testField");

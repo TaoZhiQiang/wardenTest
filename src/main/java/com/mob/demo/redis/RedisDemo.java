@@ -44,14 +44,17 @@ public class RedisDemo {
         //System.out.println("清空库中所有数据："+((Object) redis).flushDB());
 		
 		redisCli.select(DEFAULT_DB_INDEX);
-        System.out.println("======================key=========================="); 
+        System.out.println("======================key相关操作=========================="); 
         
         // 判断key否存在 
-        System.out.println("判断key999键是否存在："+redisCli.exists("key999")); 
-        System.out.println("新增key01,value01键值对："+redisCli.set("key01", "value01")); 
+        System.out.println("判断key999键是否存在："+redisCli.exists("key999"));
+        //key存储
+        System.out.println("新增key01,value01键值对："+redisCli.set("key01", "value01"));
+        //再次判断
         System.out.println("判断key01是否存在："+redisCli.exists("key01"));
         // 输出系统中所有的key
         System.out.println("新增key02,value02键值对："+redisCli.set("key02", "value02"));
+        //遍历数据库中所有的key
         System.out.println("遍历系统中所有的key：");
         Set<String> keys = redisCli.keys("*"); 
         Iterator<String> it=keys.iterator() ;   
@@ -62,7 +65,7 @@ public class RedisDemo {
         // 删除某个key,若key不存在，则忽略该命令。
         System.out.println("系统中删除key02: "+redisCli.del("key02"));
         System.out.println("判断key02是否存在："+redisCli.exists("key02"));
-        // 设置 key01的过期时间
+        // 设置 key01的过期时间为5秒
         System.out.println("设置 key01的过期时间为5秒:"+redisCli.expire("key01", 5));
         try{ 
             Thread.sleep(2000); 
@@ -88,9 +91,10 @@ public class RedisDemo {
 	//2.String功能
 	public static void StringOperate() 
     {  
-        System.out.println("======================String_1=========================="); 
+        System.out.println("======================String_1相关用法=========================="); 
         
         System.out.println("=============增=============");
+        //简单的增查
         redisCli.set("key01","value01");
         redisCli.set("key02","value02");
         redisCli.set("key03","value03");
@@ -100,6 +104,7 @@ public class RedisDemo {
         System.out.println(redisCli.get("key03"));
         
         System.out.println("=============删=============");  
+        //根据制定key值删除
         System.out.println("删除key03键值对："+redisCli.del("key03"));  
         System.out.println("获取key03键对应的值："+redisCli.get("key03"));
         
@@ -133,8 +138,8 @@ public class RedisDemo {
         System.out.println();
                 
             
-        //redisCli具备的功能redisCli中也可直接使用，下面测试一些前面没用过的方法
-        System.out.println("======================String_2=========================="); 
+        //redisFactory具备的功能redisCli中也可直接使用，下面测试一些前面没用过的方法
+        System.out.println("======================String_2特殊用法=========================="); 
         // 清空数据 
         //System.out.println("清空库中所有数据："+redisCli.flushDB());       
        
@@ -147,7 +152,7 @@ public class RedisDemo {
         
         System.out.println("=============超过有效期键值对被删除=============");
         // 设置key的有效期，并存储数据 
-        System.out.println("新增key303，并指定过期时间为2秒"+redisCli.setex("key303", 2, "key303-2second")); 
+        System.out.println("新增key303，并指定过期时间为2秒："+redisCli.setex("key303", 2, "key303-2second")); 
         System.out.println("获取key303对应的值："+redisCli.get("key303")); 
         try{ 
             Thread.sleep(3000); 
@@ -161,6 +166,7 @@ public class RedisDemo {
         System.out.println("key302新值："+redisCli.get("key302"));
         
         System.out.println("=============获取子串=============");
+        //限定起始结束
         System.out.println("获取key302对应值中的子串："+redisCli.getrange("key302", 5, 7));         
     } 
 	
@@ -168,9 +174,10 @@ public class RedisDemo {
 	// TODO Auto-generated catch block
 	//3.list功能
 	public static void ListOperate(){ 
-        System.out.println("======================list=========================="); 
+        System.out.println("======================list相关方法=========================="); 
 
         System.out.println("=============增=============");
+        //Stringlists集合
         redisCli.lpush("stringlists", "vector"); 
         redisCli.lpush("stringlists", "ArrayList"); 
         redisCli.lpush("stringlists", "vector");
@@ -179,10 +186,12 @@ public class RedisDemo {
         redisCli.lpush("stringlists", "MapList");
         redisCli.lpush("stringlists", "SerialList");
         redisCli.lpush("stringlists", "HashList");
+        //numberlists集合
         redisCli.lpush("numberlists", "3");
         redisCli.lpush("numberlists", "1");
         redisCli.lpush("numberlists", "5");
         redisCli.lpush("numberlists", "2");
+        //起始结束
         System.out.println("所有元素-stringlists："+redisCli.lrange("stringlists", 0, -1));
         System.out.println("所有元素-numberlists："+redisCli.lrange("numberlists", 0, -1));
         
@@ -210,7 +219,8 @@ public class RedisDemo {
        /*注意：
         * 使用list存储字符串时必须指定参数为alpha，如果不使用SortingParams对象，而是直接使用sort("list")，
                          会出现"ERR One or more scores can't be converted into double"*/
-         
+        
+        //将参数排序
         SortingParams sortingParameters = new SortingParams();
         sortingParameters.alpha();
         sortingParameters.limit(0, 3);
@@ -227,7 +237,7 @@ public class RedisDemo {
 	public static void SetOperate() 
 	    { 
 
-	        System.out.println("======================set=========================="); 
+	        System.out.println("======================set相关方法=========================="); 
 	        
 	        System.out.println("=============增=============");
 	        System.out.println("向sets集合中加入元素element01："+redisCli.sadd("sets", "element01")); 
@@ -240,7 +250,7 @@ public class RedisDemo {
 	        System.out.println("=============删=============");
 	        System.out.println("集合sets中删除元素element03："+redisCli.srem("sets", "element03"));
 	        System.out.println("查看sets集合中的所有元素:"+redisCli.smembers("sets"));
-	        System.out.println("sets集合中任意位置的元素出栈："+redisCli.spop("sets"));//注：出栈元素位置不固定
+	        System.out.println("sets集合中任意位置的元素出栈："+redisCli.spop("sets"));//注：出栈元素位置不固定，是随机的
 	        System.out.println("查看sets集合中的所有元素:"+redisCli.smembers("sets"));
 	        System.out.println();
 	        
@@ -280,15 +290,14 @@ public class RedisDemo {
 	//5.zSet功能
 	public static void SortedSetOperate() 
     { 
-        System.out.println("======================zset=========================="); 
+        System.out.println("======================zset相关方法=========================="); 
       
-        System.out.println("=============增=============");
-        
-        //System.out.println("zset中添加元素element01："+redisCli.zadd(key, score, member)); 
+        System.out.println("=============增============="); 
+        //System.out.println("zset中添加元素element01："+redisCli.zadd(key, score（权重）, member)); 
         System.out.println("zset中添加元素element01："+redisCli.zadd("zset", 7.0, "element01")); 
         System.out.println("zset中添加元素element02："+redisCli.zadd("zset", 8.0, "element02")); 
         System.out.println("zset中添加元素element03："+redisCli.zadd("zset", 2.0, "element03")); 
-        System.out.println("zset中添加元素element004："+redisCli.zadd("zset", 3.0, "element004"));
+        System.out.println("zset中添加元素element04："+redisCli.zadd("zset", 3.0, "element04"));
         System.out.println("zset集合中的所有元素："+redisCli.zrange("zset", 0, -1));//按照权重值排序
         System.out.println();
         
@@ -312,13 +321,16 @@ public class RedisDemo {
 	//6.hash功能
 	public static void HashOperate() 
     { 
-        System.out.println("======================hash==========================");
+        System.out.println("======================hash相关方法==========================");
         
         System.out.println("=============增=============");
+        //添加
         System.out.println("hashs中添加key01和value01键值对："+redisCli.hset("hashs", "key01", "value01")); 
         System.out.println("hashs中添加key02和value02键值对："+redisCli.hset("hashs", "key02", "value02")); 
         System.out.println("hashs中添加key03和value03键值对："+redisCli.hset("hashs", "key03", "value03"));
-        System.out.println("新增key004和4的整型键值对："+redisCli.hincrBy("hashs", "key004", 4l));
+        //值为整型
+        System.out.println("新增key04和4的整型键值对："+redisCli.hincrBy("hashs", "key04", 4l));
+        //遍历
         System.out.println("hashs中的所有值："+redisCli.hvals("hashs"));
         System.out.println();
         
@@ -328,14 +340,16 @@ public class RedisDemo {
         System.out.println();
         
         System.out.println("=============改=============");
-        System.out.println("key004整型键值的值增加100："+redisCli.hincrBy("hashs", "key004", 100l));
+        System.out.println("key04整型键值的值增加100："+redisCli.hincrBy("hashs", "key04", 100l));
         System.out.println("hashs中的所有值："+redisCli.hvals("hashs"));
         System.out.println();
         
         System.out.println("=============查=============");
         System.out.println("判断key03是否存在："+redisCli.hexists("hashs", "key03"));
-        System.out.println("获取key004对应的值："+redisCli.hget("hashs", "key004"));
-        System.out.println("批量获取key01和key03对应的值："+redisCli.hmget("hashs", "key01", "key03")); 
+        System.out.println("获取key04对应的值："+redisCli.hget("hashs", "key004"));
+        //批量获取
+        System.out.println("批量获取key01和key03对应的值："+redisCli.hmget("hashs", "key01", "key03"));
+        //获取所有key对应的值
         System.out.println("获取hashs中所有的key："+redisCli.hkeys("hashs"));
         System.out.println("获取hashs中所有的value："+redisCli.hvals("hashs"));
         System.out.println();
